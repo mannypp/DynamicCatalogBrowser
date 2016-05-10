@@ -5,7 +5,6 @@
 'use strict';
 import React, {
   Component,
-  StyleSheet,
   Image
 } from 'react-native';
 
@@ -16,7 +15,5 @@ class DWImage extends Component {
     );
   }
 }
-
-var styles = require('../styles');
 
 module.exports = DWImage;

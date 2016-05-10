@@ -5,7 +5,6 @@
 'use strict';
 import React, {
   Component,
-  StyleSheet,
   TextInput
 } from 'react-native';
 
@@ -17,7 +16,5 @@ class DWTextInput extends Component {
               value={this.props.value}/>);
   }
 }
-
-var styles = require('../styles');
 
 module.exports = DWTextInput;

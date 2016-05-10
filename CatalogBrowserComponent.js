@@ -95,6 +95,6 @@ class CatalogBrowserComponent extends Component {
   }
 }
 
-var styles = require('./styles');
+var styles = require('./styles/applicationModuleStyles');
 
 module.exports = CatalogBrowserComponent;

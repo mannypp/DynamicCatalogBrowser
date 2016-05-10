@@ -21,7 +21,6 @@ var DWButton = require('./DWButton');
 var browser;
 
 class CatalogBrowser extends Component {
-
   // initialization
   constructor(props) {
     super(props);
@@ -38,6 +37,10 @@ class CatalogBrowser extends Component {
 
   componentDidMount() {
     this.search();
+  }
+
+  features() {
+    return [];
   }
 
   loadProduct(id) {
@@ -96,6 +99,6 @@ class CatalogBrowser extends Component {
   }
 }
 
-var styles = require('./styles');
+var styles = require('./styles/applicationModuleStyles');
 
 module.exports = CatalogBrowser;

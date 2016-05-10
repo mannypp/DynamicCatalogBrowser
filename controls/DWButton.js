@@ -5,7 +5,6 @@
 'use strict';
 import React, {
   Component,
-  StyleSheet,
   Text,
   View,
   TouchableHighlight
@@ -22,7 +21,5 @@ class DWButton extends Component {
       );
   }
 }
-
-var styles = require('../styles');
 
 module.exports = DWButton;
