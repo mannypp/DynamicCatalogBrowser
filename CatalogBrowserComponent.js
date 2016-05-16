@@ -31,7 +31,8 @@ class CatalogBrowserComponent extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.props.eventEmitter.emit('features', {'features':['search']});
     this.search();
   }
 
@@ -80,6 +81,7 @@ class CatalogBrowserComponent extends Component {
           <DynamicComponent product={this.state.product} template='file://views/image'/>
           <DynamicComponent controller={browser} template='file://views/buttons'/>
           <DynamicComponent product={this.state.product} template='file://views/productInfo'/>
+          <DynamicComponent product={this.state.product} template='file://views/addToCartButton'/>
         </View>
       );
     }

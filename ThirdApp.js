@@ -11,20 +11,15 @@ import React, {
   Text
 } from 'react-native';
 
-
-var eventEmitter;
-
-
-class SecondApp extends Component {
+class ThirdApp extends Component {
   componentDidMount() {
-    eventEmitter = this.props.eventEmitter;
-    eventEmitter.emit('features', {'features':['cart']});
+    this.props.eventEmitter.emit('features', {'features':[]});
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Second app</Text>
+        <Text>Third app</Text>
       </View>
     );
   }
@@ -32,4 +27,4 @@ class SecondApp extends Component {
 
 var styles = require('./styles/applicationModuleStyles');
 
-module.exports = SecondApp;
+module.exports = ThirdApp;

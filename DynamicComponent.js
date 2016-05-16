@@ -336,10 +336,14 @@ class DynamicComponent extends Component {
     return children;
   }
 
+  shouldComponentUpdate() {
+    return this.state.loaded;
+  }
+
   render() {
-    if (!this.state.loaded) { // needs to be preloaded
+    /*if (!this.state.loaded) { // needs to be preloaded
       return (<View/>);
-    }
+    }*/
 
     var res = this.assembleView(this.state.mergedTemplate ? this.state.mergedTemplate : this.state.template);
     if (res.length == 1) {

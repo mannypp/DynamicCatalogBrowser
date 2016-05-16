@@ -7,8 +7,32 @@ var styles = React.StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF'
+  },
+  navigationBar: {
+    backgroundColor: '#E0E0E0',
+    top: 20,
+    height: 45
+  },
+  navTitle: {
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  leftNavButtonText: {
+    borderLeftWidth: 5,
+    top: 2,
+    fontSize: 14
+  },
+  rightNavButtonText: {
+    borderRightWidth: 5,
+    top: 2,
+    fontSize: 14
+  },
+  navSceneStyle: {
+    borderWidth: 4,
+    borderColor: '#E0E0E0',
+    top: 45
   }
 });
 
