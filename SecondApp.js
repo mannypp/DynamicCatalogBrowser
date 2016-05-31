@@ -3,24 +3,17 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
+import React, { Component } from 'react';
+import {
   AppRegistry,
-  Component,
   StyleSheet,
   View,
   Text
 } from 'react-native';
+import DemandwareComponent from './DemandwareComponent';
 
 
-var eventEmitter;
-
-
-class SecondApp extends Component {
-  componentDidMount() {
-    eventEmitter = this.props.eventEmitter;
-    eventEmitter.emit('features', {'features':['cart']});
-  }
-
+class SecondApp extends DemandwareComponent {
   render() {
     return (
       <View style={styles.container}>

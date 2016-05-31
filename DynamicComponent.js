@@ -3,14 +3,16 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
-  Component,
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
 import xml2js from 'xml2js';
+
+var Features = require('./components/Features');
 
 var DWText = require('./controls/DWText');
 var DWButton = require('./controls/DWButton');
@@ -19,6 +21,7 @@ var DWTextInput = require('./controls/DWTextInput');
 
 var coreCode = require('./views/views');
 var customCode = require('./custom/views/views');
+var componentCode = require('./components/components');
 
 class DynamicComponent extends Component {
   constructor(props) {
@@ -224,6 +227,10 @@ class DynamicComponent extends Component {
       }
       if (displayCondition == "false" || displayCondition == "0" || displayCondition == 0) {
         return false;
+      }
+      if (displayCondition.startsWith("feature-present:")) {
+        var parts = displayCondition.split(':');
+        return Features.getInstance().hasFeature(parts[1]);
       }
       if (!Boolean(this.getStateValue(displayCondition))) {
         return false;

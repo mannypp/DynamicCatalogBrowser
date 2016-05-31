@@ -3,12 +3,8 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
-  Component,
-  Text,
-  View,
-  TouchableHighlight
-} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, TouchableHighlight } from 'react-native';
 
 class DWButton extends Component {
   render() {

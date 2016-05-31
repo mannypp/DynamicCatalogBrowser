@@ -3,10 +3,8 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
-  Component,
-  TextInput
-} from 'react-native';
+import React, { Component } from 'react';
+import { TextInput } from 'react-native';
 
 class DWTextInput extends Component {
   render() {

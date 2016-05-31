@@ -4,8 +4,8 @@ exports.view = `
 
 exports.styles = {
   image: {
-    height: 345,
-    width: 345,
+    height: 300,
+    width: 300,
     borderColor: 'gray',
     borderWidth: 1
   }

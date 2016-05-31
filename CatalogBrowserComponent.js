@@ -3,25 +3,26 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
+import React, { Component } from 'react';
+import {
   AppRegistry,
-  Component,
   StyleSheet,
-  TextInput,
   View
 } from 'react-native';
 
-var AppPlatform = require('./lib/model/storeplatform');
 var DynamicComponent = require('./DynamicComponent');
 
-var browser;
-var useServer = false;
+import AppPlatform from './lib/model/storeplatform';
+import ProductInfo from './components/ProductInfo';
+import CatalogBrowserButtons from './components/CatalogBrowserButtons';
+import DemandwareComponent from './DemandwareComponent';
 
-class CatalogBrowserComponent extends Component {
+var useServer = false;
+var features = ['search'];
+
+class CatalogBrowserComponent extends DemandwareComponent {
   constructor(props) {
     super(props);
-    browser = this;
-
     this.state = {
       queryString: 'red',
       results: undefined,
@@ -32,14 +33,20 @@ class CatalogBrowserComponent extends Component {
   }
 
   componentDidMount() {
-    this.props.eventEmitter.emit('features', {'features':['search']});
+    super.componentDidMount();
     this.search();
   }
 
+  getFeatures() {
+    return features;
+  }
+
   loadProduct(id) {
+    var that = this;
     AppPlatform.Product.find(id, {
       onload: function(e) {
-        browser.setState({product: e});
+        that.setState({product: e});
+        that.fireGlobalEvent('productLoaded', {'product':e});
       },
       onerror: function(e) {
         console.log(e);
@@ -48,10 +55,11 @@ class CatalogBrowserComponent extends Component {
   }
 
   search() {
+    var that = this;
     AppPlatform.ProductSearch.search(this.state.queryString, {
       onload: function(e) {
-        browser.setState({results: e, cursor: 0});
-        browser.loadProduct(browser.state.results.hits[browser.state.cursor].product_id);
+        that.setState({results: e, cursor: 0});
+        that.loadProduct(that.state.results.hits[that.state.cursor].product_id);
       },
       onerror: function(e) {
         console.log(e);
@@ -67,9 +75,9 @@ class CatalogBrowserComponent extends Component {
     if (useServer) {
       return (
         <View style={styles.container}>
-          <DynamicComponent controller={browser} template='http://localhost/views/textinput.js'/>
+          <DynamicComponent controller={this} template='http://localhost/views/textinput.js'/>
           <DynamicComponent product={this.state.product} template='http://localhost/views/image.js'/>
-          <DynamicComponent controller={browser} template='http://localhost/views/buttons.js'/>
+          <DynamicComponent controller={this} template='http://localhost/views/buttons.js'/>
           <DynamicComponent product={this.state.product} template='http://localhost/views/productInfo.js'/>
         </View>
       );
@@ -77,14 +85,14 @@ class CatalogBrowserComponent extends Component {
     else {
       return (
         <View style={styles.container}>
-          <DynamicComponent controller={browser} template='file://views/textinput'/>
+          <DynamicComponent controller={this} template='file://views/textinput'/>
           <DynamicComponent product={this.state.product} template='file://views/image'/>
-          <DynamicComponent controller={browser} template='file://views/buttons'/>
-          <DynamicComponent product={this.state.product} template='file://views/productInfo'/>
+          <DynamicComponent controller={this} template='file://views/buttons'/>
+          <ProductInfo product={this.state.product}/>
+          <DynamicComponent template='file://views/addToCart'/>
         </View>
       );
-      //          <DynamicComponent template='file://views/addToCart'/>
-
+      //<DynamicComponent product={this.state.product} template='file://views/productInfo'/>
     }
 
     /*  Original JSX

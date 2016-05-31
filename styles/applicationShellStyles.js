@@ -22,12 +22,14 @@ var styles = React.StyleSheet.create({
   leftNavButtonText: {
     borderLeftWidth: 5,
     top: 2,
-    fontSize: 14
+    fontSize: 14,
+    color: 'blue'
   },
   rightNavButtonText: {
     borderRightWidth: 5,
     top: 2,
-    fontSize: 14
+    fontSize: 14,
+    color: 'blue'
   },
   navSceneStyle: {
     borderWidth: 4,

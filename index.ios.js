@@ -14,24 +14,20 @@ import {
   Linking
 } from 'react-native';
 
-var EventEmitter = require('EventEmitter');
-var Subscribable = require('Subscribable');
-
+var Features = require('./components/Features').getInstance();
+var Events = require('./components/Events').getInstance();
 
 var _navigator;
-var eventEmitter = new EventEmitter();
-var features = [];
 
 var CatalogBrowserComponent = require('./CatalogBrowserComponent');
 var SecondApp = require('./SecondApp');
 var ThirdApp = require('./ThirdApp');
 
 var applicationModules = [CatalogBrowserComponent, SecondApp, ThirdApp]; // will be loaded from remote configuration source
-var applicationModulePassProps = {eventEmitter: eventEmitter};
 var ROUTE_STACK = [
-  {name:'Catalog Browser', component:applicationModules[0], index:0, passProps: applicationModulePassProps, deepLinkPath: 'catalogBrowser'},
-  {name:'Second App', component:applicationModules[1], index:1, passProps: applicationModulePassProps, deepLinkPath: 'secondApp'},
-  {name:'Third App', component:applicationModules[2], index:2, passProps: applicationModulePassProps, deepLinkPath: 'thirdApp'}
+  {name:'Catalog Browser', component:applicationModules[0], index:0, passProps: {}, deepLinkPath: 'catalogBrowser'},
+  {name:'Second App', component:applicationModules[1], index:1, passProps: {}, deepLinkPath: 'secondApp'},
+  {name:'Third App', component:applicationModules[2], index:2, passProps: {}, deepLinkPath: 'thirdApp'}
 ];
 
 
@@ -72,56 +68,72 @@ var NavBarRouteMapper = {
 
 
 // ApplicationShell
-var DynamicCatalogBrowser = React.createClass({
-  mixins: [Subscribable.Mixin],
+class DynamicCatalogBrowser extends Component {
+  setupEventListeners() {
+    Events.addGlobalEventListener('features', this.addAppFeatures);
+    Events.addGlobalEventListener('route', this.resolveRoute);
+  }
 
-  setupEventListeners: function() {
-    this.addListenerOn(eventEmitter, 'features', this.addAppFeatures);
-    this.addListenerOn(eventEmitter, 'testEvent', this.logEvent);
-  },
+  resolveRoute(route) {
+    var parts = route.url.split('/');
+    var appId = parts[0];
+    if (parts && parts[0].indexOf(':') > -1) {
+      appId = parts[1];
+    }
 
-  checkForDeepLinkUrl: function() {
+    var r;
+    for (var i = 0; i < ROUTE_STACK.length; i++) {
+      r = ROUTE_STACK[i];
+      if (route.deepLinkPath == appId) {
+        break;
+      }
+    }
+
+    _navigator.jumpTo(r);
+  }
+
+  checkForDeepLinkUrl() {
     var url = Linking.getInitialURL().then((url) => {
       if (url) {
         console.log('Initial url is: ' + url);
+        this.resolveRoute({url: url});
       }
     }).catch(err => console.error('An error occurred', err));
-  },
+  }
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.setupEventListeners();
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.checkForDeepLinkUrl();
-  },
+    setTimeout(function() {
+      Events.fireGlobalEvent('route', {url:'thirdApp/product/013742002454'});
+    }, 3000);
+  }
 
-  addAppFeatures: function(event){
+  addAppFeatures(event) {
     console.log('received features event: ' + event.features);
     if (event.features && event.features.length > 0) {
-      features = features.concat(event.features);
+      Features.addFeatures(event.features);
       console.log('added app features: ' + event.features);
-      console.log('all app features: ' + features);
+      console.log('all app features: ' + Features.getFeatures());
     }
-  },
+  }
 
-  navigatorRenderScene: function(route, navigator) {
+  navigatorRenderScene(route, navigator) {
     if (!_navigator) {
       _navigator = navigator;
     }
 
     return (React.createElement(applicationModules[route.index], {key:0, title:route.name, navigator:_navigator, ...route.passProps} ));
-  },
+  }
 
-  navigatorConfigureScene: function() {
+  navigatorConfigureScene() {
     return Navigator.SceneConfigs.PushFromRight;
-  },
+  }
 
-  shouldComponentUpdate: function() { // determines if render() should be called after state is updated
-    return true;
-  },
-
-  render: function() {
+  render() {
     return (
         <Navigator style={styles.applicationContainer}
           sceneStyle={styles.navSceneStyle}
@@ -134,8 +146,8 @@ var DynamicCatalogBrowser = React.createClass({
         />
       );
   }
-});
+}
 
 var styles = require('./styles/applicationShellStyles');
 
-AppRegistry.registerComponent('DynamicCatalogBrowser', () => DynamicCatalogBrowser);
+AppRegistry.registerComponent('CatalogBrowserPush', () => DynamicCatalogBrowser);

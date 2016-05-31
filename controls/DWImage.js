@@ -3,10 +3,8 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-import React, {
-  Component,
-  Image
-} from 'react-native';
+import React, { Component } from 'react';
+import { Image } from 'react-native';
 
 class DWImage extends Component {
   render() {
