@@ -14,11 +14,16 @@ import DynamicComponent from './DynamicComponent';
 import ProductInfo from './components/ProductInfo';
 import DemandwareComponent from './DemandwareComponent';
 
+var features = ['cart'];
 
 class ThirdApp extends DemandwareComponent {
   constructor(props) {
     super(props);
     this.state = {product: undefined};
+  }
+
+  getFeatures() {
+    return features;
   }
 
   componentWillMount() {    
