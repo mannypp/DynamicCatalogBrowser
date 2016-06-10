@@ -6,10 +6,10 @@ exports.styles = {
   input: {
     height: 18,
     width: 345,
-    left: 15,
+    left: 205,
     paddingTop: 10,
     paddingBottom: 10,
-    borderColor: 'gray',
+    borderColor: 'green',
     borderWidth: 1,
     marginBottom: 10
   }

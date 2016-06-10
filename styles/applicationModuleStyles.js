@@ -9,6 +9,8 @@ var styles = React.StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
+    borderColor: 'green',
+    borderWidth: 3
   }
 });
 

@@ -6,7 +6,7 @@ exports.styles = {
   image: {
     height: 300,
     width: 300,
-    borderColor: 'gray',
+    borderColor: 'green',
     borderWidth: 1
   }
 };

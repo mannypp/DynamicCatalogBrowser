@@ -10,6 +10,8 @@ exports.styles = {
     flexDirection: 'row',
     paddingTop: 10,
     paddingBottom: 10,
+    borderColor: 'green',
+    borderWidth: 1
   },
   button: {
   },

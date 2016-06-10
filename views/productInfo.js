@@ -10,7 +10,7 @@ exports.styles = {
   "textContainer": {
     "width": 370,
     "paddingTop": 10,
-    "borderColor": "gray",
+    "borderColor": "green",
     "borderWidth": 1
   },
   "text": {
