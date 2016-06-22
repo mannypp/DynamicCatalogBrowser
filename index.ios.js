@@ -32,7 +32,7 @@ var ROUTE_STACK = [
 
 
 var NavBarRouteMapper = {
-  LeftButton(route, navigator, index, navState) { 
+  LeftButton(route, navigator, index, navState) {
     if(index > 0) {
       return (
         <TouchableHighlight underlayColor="transparent"
@@ -43,12 +43,12 @@ var NavBarRouteMapper = {
           }}>
           <Text style={ styles.leftNavButtonText }>&lt; { ROUTE_STACK[index - 1].name }</Text>
         </TouchableHighlight>)
-    } 
+    }
     else {
       return null;
     }
   },
-  RightButton(route, navigator, index, navState) { 
+  RightButton(route, navigator, index, navState) {
     if (index < ROUTE_STACK.length - 1) {
       return (
         <TouchableHighlight
@@ -61,9 +61,9 @@ var NavBarRouteMapper = {
         </TouchableHighlight>)
     }
   },
-  Title(route, navigator, index, navState) { 
+  Title(route, navigator, index, navState) {
     return <Text style={ styles.navTitle }>{ROUTE_STACK[index].name}</Text>
-  }  
+  }
 }
 
 
